@@ -15,9 +15,14 @@ class App extends React.Component {
     // We must use the setState of React
     const fishes = {...this.state.fishes}
     fishes[`fish${Date.now()}`] = fish
-    this.setState({
-      fishes
-    })
+    this.setState({ fishes })
+  }
+
+  addToOrder = (fish) => {
+    const order = {...this.state.order}
+
+    order[fish] = order[fish] + 1 || 1
+    this.setState({ order })
   }
 
   loadSampleFishes = () => {
@@ -32,7 +37,14 @@ class App extends React.Component {
           <ul className="fishes">
             {
               Object.keys(this.state.fishes)
-              .map(fish => <Fish key={fish} details={this.state.fishes[fish]}/>)
+              .map(fish => 
+                <Fish 
+                  key={fish}
+                  index={fish}
+                  details={this.state.fishes[fish]} 
+                  addToOrder={this.addToOrder}
+                />
+              )
             }
           </ul>
         </div>
