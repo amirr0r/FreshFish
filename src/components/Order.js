@@ -5,7 +5,7 @@ class Order extends React.Component {
   renderOrder = key => {
     const fish = this.props.fishes[key]
     const count = this.props.order[key]
-    const isAvailable = fish.status === "available"
+    const isAvailable = fish && fish.status === "available"
 
     if (!isAvailable) {
       return (
@@ -14,14 +14,16 @@ class Order extends React.Component {
         </li>
       )
     }
+    if (fish) {
+      return (
+        <li key={key}>
+          {count} lbs {fish.name}
+          <hr />
+          {formatPrice(count * fish.price)}
+        </li>
+      )
+    }
 
-    return (
-      <li key={key}>
-        {count} lbs {fish.name}
-        <hr />
-        {formatPrice(count * fish.price)}
-      </li>
-    )
   }
   
   countFish = (prevTotal, key) => {
